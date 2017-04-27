@@ -1,7 +1,7 @@
 
 <h1>Listing All Postings</h1>
 
-<form href="/postings/create" method="POST">
+<form action="/postings/create" method="POST">
   <div class="form-group">
     <label for="title">Title: </label>
     <input type="title" class="form-control" name="title" id="title">
@@ -14,7 +14,21 @@
 </form>
 
 
-<% @all_postings.each do |p| %>
- <h3>Title : <%= p.title %></h3>
- <p> Body : <%= p.body %></p>
-<% end %>
+    <% @all_postings.each do |p| %>
+     <h3>Title : <%= p.title %></h3>
+     <p> Body : <%= p.body %></p>
+     <form action="/comments/create" method="POST">
+       <div class="form-group">
+            <label for="comment">Add a comment: </label>
+            <input type="hidden" value="<%= p.id %>" name="id_of_posting">
+            <input type="text" class="form-control" name="comment" id="comment"><br>
+            <button type="submit" class="btn btn-default">Submit</button>
+        </div>
+      </form>
+      
+    <% @all_comments.each do |c| %>
+      <% if c.posting_id == p.id %>
+      <p> Comment : <%= c.content %></p>              
+    <% end %>
+<% end %> 
+<% end %> 
